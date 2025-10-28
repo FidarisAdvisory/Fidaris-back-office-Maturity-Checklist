@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back Office Process Maturity Assessment - Fidaris Advisory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #0066cc;
+        }
+        
+        .header-left {
+            flex: 1;
+        }
+        
+        .tagline {
+            font-size: 13px;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .logo-placeholder {
+            width: 150px;
+            height: 80px;
+            background: linear-gradient(135deg, #0a2540 0%, #1a4d7a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: #d4af37;
+            font-weight: 700;
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        h1 {
+            color: #0066cc;
+            font-size: 28px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .intro {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+        
+        .scoring-guide {
+            background: linear-gradient(135deg, #e8f4ff 0%, #f0f8ff 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border-left: 4px solid #0066cc;
+        }
+        
+        .scoring-guide h2 {
+            color: #0066cc;
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .score-options {
+            display: flex;
+            gap: 15px;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+        
+        .score-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .score-icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .score-label {
+            font-weight: 700;
+            font-size: 16px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .score-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .assessment-section {
+            margin: 30px 0;
+        }
+        
+        .assessment-item {
+            background: #fafafa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        .assessment-item.answered {
+            background: #f0f8ff;
+            border-color: #0066cc;
+        }
+        
+        .category-name {
+            font-weight: 700;
+            color: #0066cc;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        
+        .statement {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .score-button {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .score-button:hover {
+            border-color: #0066cc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,102,204,0.2);
+        }
+        
+        .score-button.selected {
+            background: #0066cc;
+            color: white;
+            border-color: #0066cc;
+        }
+        
+        .score-button .emoji {
+            font-size: 18px;
+        }
+        
+        .total-section {
+            background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .total-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .total-score {
+            font-size: 64px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+        
+        .total-max {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .results-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border-left: 4px solid #0066cc;
+            display: none;
+        }
+        
+        .results-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .results-section h2 {
+            color: #0066cc;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .result-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 18px;
+            margin: 15px 0;
+        }
+        
+        .result-reactive {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .result-managed {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .result-optimized {
+            background: #28a745;
+            color: white;
+        }
+        
+        .result-description {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #555;
+            margin: 15px 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .cta-section h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .cta-section p {
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 10px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0066cc;
+            padding: 15px 35px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,255,255,0.3);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0066cc 0%, #00cc66 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .score-options {
+                flex-direction: column;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .total-score {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <p class="tagline">Finance Transformation | Shared Services | Process Excellence</p>
+            </div>
+            <div class="logo-placeholder">
+                FIDARIS<br>ADVISORY
+            </div>
+        </div>
+
+        <h1>Back Office Process Maturity Assessment</h1>
+        
+        <p class="intro">
+            This interactive assessment helps you quickly gauge the maturity of your back-office operations across key dimensions: processes, roles, automation, KPIs, and governance. <strong>Click your score for each statement</strong> and see your results instantly.
+        </p>
+
+        <div class="scoring-guide">
+            <h2>How to Score Each Statement</h2>
+            <div class="score-options">
+                <div class="score-option">
+                    <span class="score-icon">❌</span>
+                    <span class="score-label">1 = Not in Place</span>
+                    <span class="score-desc">Ad-hoc, inconsistent, or missing</span>
+                </div>
+                <div class="score-option">
+                    <span class="score-icon">⚠️</span>
+                    <span class="score-label">2 = Partially in Place</span>
+                    <span class="score-desc">Started but inconsistent</span>
+                </div>
+                <div class="score-option">
+                    <span class="score-icon">✅</span>
+                    <span class="score-label">3 = Fully in Place</span>
+                    <span class="score-desc">Standardized and working well</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">Complete all 8 questions to see your results</div>
+
+        <div class="assessment-section" id="assessmentSection">
+            <!-- Questions will be dynamically generated -->
+        </div>
+
+        <div class="total-section">
+            <h2>Your Total Score</h2>
+            <div class="total-score" id="totalScore">0</div>
+            <div class="total-max">out of 24</div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h2>Your Results</h2>
+            <div id="resultBadge"></div>
+            <div id="resultDescription"></div>
+        </div>
+
+        <div class="cta-section">
+            <h3>Ready to Move Forward?</h3>
+            <p>If your score is below 21, you're likely missing key opportunities for efficiency, control, and scalability.</p>
+            <p style="font-weight: 600; margin-top: 20px;">Schedule a free 30-minute Process Clarity Call with Fidel Salazar to identify your top 3 quick wins.</p>
+            <a href="mailto:fidelsalazar@fidarisadvisory.com" class="cta-button">fidelsalazar@fidarisadvisory.com</a>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                category: "Process Design",
+                statement: "We have documented, standardized processes for key finance and administrative activities."
+            },
+            {
+                category: "Roles & Responsibilities",
+                statement: "Every critical process has a clear owner who is held accountable for results."
+            },
+            {
+                category: "KPIs & Metrics",
+                statement: "We regularly track and review KPIs that drive improvement decisions."
+            },
+            {
+                category: "Automation",
+                statement: "Manual, repetitive tasks are automated or supported by digital tools where it makes sense."
+            },
+            {
+                category: "Governance",
+                statement: "We conduct regular reviews or audits of back-office performance and compliance."
+            },
+            {
+                category: "Communication",
+                statement: "Information flows smoothly between teams with minimal delays, errors, or confusion."
+            },
+            {
+                category: "Training & Onboarding",
+                statement: "New hires receive structured training on their processes, systems, and responsibilities."
+            },
+            {
+                category: "Continuous Improvement",
+                statement: "We have a formal process for capturing and acting on improvement ideas from the team."
+            }
+        ];
+
+        const scores = new Array(questions.length).fill(0);
+        const emojis = ['❌', '⚠️', '✅'];
+
+        function renderQuestions() {
+            const container = document.getElementById('assessmentSection');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const item = document.createElement('div');
+                item.className = 'assessment-item';
+                item.id = `question-${index}`;
+                
+                item.innerHTML = `
+                    <div class="category-name">${q.category}</div>
+                    <div class="statement">${q.statement}</div>
+                    <div class="button-group">
+                        <button class="score-button" onclick="selectScore(${index}, 1)">
+                            <span class="emoji">❌</span>
+                            <span>1 - Not in Place</span>
+                        </button>
+                        <button class="score-button" onclick="selectScore(${index}, 2)">
+                            <span class="emoji">⚠️</span>
+                            <span>2 - Partially</span>
+                        </button>
+                        <button class="score-button" onclick="selectScore(${index}, 3)">
+                            <span class="emoji">✅</span>
+                            <span>3 - Fully in Place</span>
+                        </button>
+                    </div>
+                `;
+                
+                container.appendChild(item);
+            });
+        }
+
+        function selectScore(questionIndex, score) {
+            scores[questionIndex] = score;
+            
+            // Update button states
+            const item = document.getElementById(`question-${questionIndex}`);
+            const buttons = item.querySelectorAll('.score-button');
+            buttons.forEach((btn, idx) => {
+                if (idx + 1 === score) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
+                }
+            });
+            
+            // Mark as answered
+            item.classList.add('answered');
+            
+            updateTotal();
+            updateProgress();
+            checkCompletion();
+        }
+
+        function updateTotal() {
+            const total = scores.reduce((sum, score) => sum + score, 0);
+            document.getElementById('totalScore').textContent = total;
+        }
+
+        function updateProgress() {
+            const answered = scores.filter(s => s > 0).length;
+            const percentage = (answered / questions.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            
+            if (answered === questions.length) {
+                document.getElementById('progressText').textContent = '✓ Assessment Complete!';
+            } else {
+                document.getElementById('progressText').textContent = `${answered} of ${questions.length} questions answered`;
+            }
+        }
+
+        function checkCompletion() {
+            const answered = scores.filter(s => s > 0).length;
+            
+            if (answered === questions.length) {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            const total = scores.reduce((sum, score) => sum + score, 0);
+            const resultsSection = document.getElementById('resultsSection');
+            const resultBadge = document.getElementById('resultBadge');
+            const resultDescription = document.getElementById('resultDescription');
+            
+            let badgeClass, badgeText, description;
+            
+            if (total >= 8 && total <= 12) {
+                badgeClass = 'result-reactive';
+                badgeText = '🔴 Reactive Operations';
+                description = `<p class="result-description"><strong>Your score: ${total}/24</strong></p>
+                              <p class="result-description">Your back office is vulnerable to errors, inefficiencies, and high dependence on key individuals. <strong>Significant opportunities exist for quick wins.</strong> You're operating in reactive mode, which means daily firefighting is likely consuming valuable time and resources.</p>
+                              <p class="result-description"><strong>Priority actions:</strong> Document your core processes, establish clear ownership, and implement basic tracking mechanisms.</p>`;
+            } else if (total >= 13 && total <= 20) {
+                badgeClass = 'result-managed';
+                badgeText = '🟡 Managed Operations';
+                description = `<p class="result-description"><strong>Your score: ${total}/24</strong></p>
+                              <p class="result-description">You have a solid foundation, but inconsistent execution is limiting your potential. <strong>Focused improvements can unlock meaningful value.</strong> You've built good practices, but they're not consistently applied across all areas.</p>
+                              <p class="result-description"><strong>Priority actions:</strong> Standardize successful practices, invest in automation where ROI is clear, and strengthen accountability mechanisms.</p>`;
+            } else if (total >= 21 && total <= 24) {
+                badgeClass = 'result-optimized';
+                badgeText = '🟢 Optimized Operations';
+                description = `<p class="result-description"><strong>Your score: ${total}/24</strong></p>
+                              <p class="result-description">Your back office operates like a best-in-class shared service. <strong>Continue refining and stay ahead of evolving business needs.</strong> You've achieved operational excellence and are positioned to scale efficiently.</p>
+                              <p class="result-description"><strong>Priority actions:</strong> Focus on continuous improvement, explore advanced analytics, and share best practices across the organization.</p>`;
+            }
+            
+            resultBadge.innerHTML = `<div class="result-badge ${badgeClass}">${badgeText}</div>`;
+            resultDescription.innerHTML = description;
+            resultsSection.classList.add('show');
+            
+            // Smooth scroll to results
+            setTimeout(() => {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        // Initialize
+        renderQuestions();
+    </script>
+</body>
+</html>
